@@ -11754,6 +11754,20 @@ void OpenMPIRBuilder::emitAArch64DeclareSimdFunction(
   }
 }
 
+// void OpenMPIRBuilder::emitDeclareSimdFunction(
+//     llvm::Function *Fn, const llvm::APSInt &VLENVal,
+//     ArrayRef<DeclareSimdAttrTy> ParamAttrs, DeclareSimdBranch Branch) {
+//   Module *M = Fn->getParent();
+//   const llvm::Triple &Triple = M->getTargetTriple();
+
+//   if (Triple.isX86()) {
+//     unsigned NumElts = evaluateCDTSize(Fn, ParamAttrs);
+//     assert(NumElts && "Non-zero simdlen/cdtsize expected");
+//     emitX86DeclareSimdFunction(Fn, NumElts, VLENVal, ParamAttrs, Branch);
+//   } else if (Triple.getArch() == llvm::Triple::aarch64) {
+//   }
+// }
+
 //===----------------------------------------------------------------------===//
 // OffloadEntriesInfoManager
 //===----------------------------------------------------------------------===//

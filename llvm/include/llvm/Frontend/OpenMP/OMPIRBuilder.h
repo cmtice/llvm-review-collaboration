@@ -3997,6 +3997,26 @@ public:
       llvm::Function *Fn, unsigned VLENVal,
       llvm::ArrayRef<DeclareSimdAttrTy> ParamAttrs, DeclareSimdBranch Branch,
       char ISA, unsigned NarrowestDataSize, bool OutputBecomesInput);
+
+  /// Emit vector function attributes for an OpenMP `declare simd` directive.
+  ///
+  /// This is the target-independent entry point used by frontends and IR
+  /// translation layers. It dispatches to a target-specific implementation
+  /// based on the module target triple.
+  ///
+  /// If the target does not support `declare simd` lowering, this function
+  /// reports an error and performs no emission.
+  ///
+  /// \param Fn          The scalar function to which vector-function
+  ///                    attributes are attached.
+  /// \param VLENVal     User provided vector length.
+  /// \param ParamAttrs  Array of attribute set of the `declare simd` arameter.
+  /// \param Branch      `undefined`, `inbranch` or `notinbranch` clause.
+  // LLVM_ABI void emitDeclareSimdFunction(llvm::Function *Fn,
+  //                                       const llvm::APSInt &VLENVal,
+  //                                       ArrayRef<DeclareSimdAttrTy>
+  //                                       ParamAttrs, DeclareSimdBranch
+  //                                       Branch);
 };
 
 /// Class to represented the control flow structure of an OpenMP canonical loop.
