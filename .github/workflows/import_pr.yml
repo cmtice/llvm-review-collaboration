@@ -1,0 +1,24 @@
+name: Import LLVM Pull Request
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'LLVM PR Number to import'
+        required: true
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Import PR
+        run: |
+          git remote add upstream https://github.com/llvm/llvm-project.git
+          git fetch upstream pull/${{ github.event.inputs.pr_number }}/head:pr-${{ github.event.inputs.pr_number }}
+          git push origin pr-${{ github.event.inputs.pr_number }}
