@@ -1,0 +1,30 @@
+name: Sync Upstream Main
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch:   # Allows you to run it manually
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Staging Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync with LLVM
+        run: |
+          git remote add upstream https://github.com/llvm/llvm-project.git
+          git fetch upstream main --depth=1
+          git checkout main
+          git reset --hard upstream/main
+          git push origin main --force
